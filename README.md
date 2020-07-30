@@ -75,11 +75,14 @@ Change /hipreme/ with your current username, save those lines on your clipboard 
 ## Getting Android lib for LDC
 Now you need to include an Android architecture lib on your LDC, to do that, go into the [LDC github repository](https://github.com/ldc-developers/ldc/)
 Go into the [releases](https://github.com/ldc-developers/ldc/releases/)
-Find for a release that matches your LDC version, as the time I'm writing this, my version is 1.22.0, so, it will have prefix like **ldc2-1.22.0-linux**
-What you're searching for is the android architecture 64 (aarch64), so the version I needed to download is: *ldc2-1.22.0-linux-aarch64.tar.xz*
+Find for a release that matches your LDC version, as the time I'm writing this, my version is 1.22.0, so, it will have prefix like **ldc2-1.22.0-android**
+What you're searching for is the android architecture 64 (aarch64), so the version I needed to download is: *ldc2-1.22.0-android-aarch64.tar.xz*
 
 **IMPORTANT** 
 > If your target architecture does not have a prebuilt binary(Those one that are in the LDC developers release assets), you will have to [build it yourself the Phobos and the DRuntime](https://wiki.dlang.org/Building_LDC_runtime_libraries)
+
+> Notice that inside your architecture target folder, you will see that there is a lib/ and other lib(commonly related to 32 bits), you can use that for
+distributing for another target, inside aarch64 there is a x86_64, you can set a configuration for targeting it too and in the binaries inside -gcc, search for x86_64
 
 After downloading it, it's time to setup your compiler to find its existence.
 
@@ -106,6 +109,9 @@ After downloading it, it's time to setup your compiler to find its existence.
 };
 ```
 - In the line of `-gcc=` you should put your Android NDK, mine was on that folder, but what you should search for is `toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang`
+
+> If you're compiling for Windows, your path will probably be something like
+>`"-gcc=C:/Users/Hipreme/AppData/Local/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd"`
 
 After that, download a sample d program from the official wiki:
 ```sh
