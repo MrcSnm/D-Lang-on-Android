@@ -77,6 +77,10 @@ Now you need to include an Android architecture lib on your LDC, to do that, go 
 Go into the [releases](https://github.com/ldc-developers/ldc/releases/)
 Find for a release that matches your LDC version, as the time I'm writing this, my version is 1.22.0, so, it will have prefix like **ldc2-1.22.0-linux**
 What you're searching for is the android architecture 64 (aarch64), so the version I needed to download is: *ldc2-1.22.0-linux-aarch64.tar.xz*
+
+**IMPORTANT** 
+> If your target architecture does not have a prebuilt binary(Those one that are in the LDC developers release assets), you will have to [build it yourself the Phobos and the DRuntime](https://wiki.dlang.org/Building_LDC_runtime_libraries)
+
 After downloading it, it's time to setup your compiler to find its existence.
 
 ## Adding compilation command
@@ -117,6 +121,11 @@ ldc2 -mtriple=aarch64--linux-android sieve.d
 ldc2 sieve.d
 ```
 If it compiles well, your LDC is correctly configured to start working with Android.
+
+Before going to the next part of this tutorial, I would like to increment that this architecture is used as a sample because this is my phone's
+respective architecture, if you wish to compile for any other architecture, take a look at [Cross Compiling with LDC](https://wiki.dlang.org/Cross-compiling_with_LDC)
+
+
 
 # Preparing your D module for Android
 After your first succesful try of compiling it to the Android architecture, you will actually need to do three things:
@@ -185,8 +194,10 @@ Test
 |--Test.iml
 ```
 And in the end there are:
-> External Libraries
-> Scratches and Consoles
+```
+|> External Libraries
+|> Scratches and Consoles
+```
 Open the folder Test/app/src/main and inside main, create a folder called `jniLibs`, this folder is **extremely important**, it is the default folder to
 put your shared libraries to be imported together with your .apk. If you wish to use other name for it, you will need to change your gradle file.
 For actually putting your libraries inside that folder, you will actually need to make directories for the target architectures, so, create inside it:
