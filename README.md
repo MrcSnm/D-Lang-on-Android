@@ -127,15 +127,26 @@ would name a C function to be exported from NDK Java_packagename_ClassName_metho
 sample.d
 ```d
 import jni;
+import std.conv : to;
+import core.runtime : rt_init;
+import std.string;
 extern(C) jstring Java_my_long_package_name_ClassName_methodname(JNIEnv* env, jclass clazz, jstring stringArgReceivedFromJava)
 {
-    return (*env).NewUTFString("Hello from D");
+    rt_init();
+    const char* javaStringInCStyle = (*env).GetStringUTFChars(env, stringArgReceivedFromJava, null);
+    string javaStringInDStyle = to!string(javaStringInCStyle);
+    (*env).ReleaseStringUTFChars(env, stringArgReceivedFromJava, javaStringInCStyle);
+
+    return (*env).NewUTFString(toStringz("Hello from D, myarg: "~javaStringInDStyle));
 }
-void main(){} //This is required for compiling
+void main(){}
 ```
 3. Compile it as a shared library, suppose you're targetting the Arm64 architecture, you would need to call:
 `ldc2 -mtriple=aarch64--linux-android --shared sample.d`
 This will output libsample.so, this file will be included in your Android project
+
+# Word of caution
+Always call rt_init, or it will probably cause the sigsegfault(5), using to!string didn't work until I used rt_init();
 
 # Creating an Android Project
 By the time of this writing, in the Official D Wiki for Building to Android, the way to generate an apk is documented for using Ant, but this is long gone,
@@ -148,6 +159,7 @@ know about gradle when managing an entire android project, and it can add many l
 - Configure and click on Finish(I'm currently using min API 23)
 - Go into the left side of your window and set your view as "Project"
 Your folder structure must be like:
+```
 Test
 |--.gradle
 |--.idea
@@ -171,6 +183,7 @@ Test
 |--local.properties
 |--settings.gradle
 |--Test.iml
+```
 And in the end there are:
 > External Libraries
 > Scratches and Consoles
@@ -183,6 +196,7 @@ For actually putting your libraries inside that folder, you will actually need t
 - x86_64
 For reference, check ndk abi guide from official android site: [Android ABI Guide](https://developer.android.com/ndk/guides/abis)
 Your new main structure must be:
+```
 main
 |--java
 |--jniLibs
@@ -192,6 +206,7 @@ main
 |--|--x86_64
 |--res
 |--AndroidManifest.xml
+```
 After creating those folderes, you can actually move your shared library into one of those folders, as we're showing with aarch64, you should move
 your libsample.so into arm64-v8a
 With that, you should now be able to import your library into Android Studio by calling inside your java code, so, at main/ảva/your/long/package/name, create
