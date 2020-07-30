@@ -207,10 +207,10 @@ And in the end there are:
 Open the folder Test/app/src/main and inside main, create a folder called `jniLibs`, this folder is **extremely important**, it is the default folder to
 put your shared libraries to be imported together with your .apk. If you wish to use other name for it, you will need to change your gradle file.
 For actually putting your libraries inside that folder, you will actually need to make directories for the target architectures, so, create inside it:
-- armeabi-v7a
-- arm64-v8a
-- x86
-- x86_64
+- armeabi-v7a (For that, it is commonly used ldc2(version)-android-armv7a/lib
+- arm64-v8a (This is our target right now, ldc2(version)-android-aarch64/lib)
+- x86 (It is the lib32 for armv7a -> ldc2(version)-android-armv7a/lib686
+- x86_64 (It is the lib32 for the aarch64 -> ldc2(version)-android-aarch64/lib-x86_64
 For reference, check ndk abi guide from official android site: [Android ABI Guide](https://developer.android.com/ndk/guides/abis)
 Your new main structure must be:
 ```
