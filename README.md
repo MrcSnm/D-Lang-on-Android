@@ -146,7 +146,7 @@ void main(){}
 This will output libsample.so, this file will be included in your Android project
 
 # Word of caution
-Always call rt_init, or it will probably cause the sigsegfault(5), using to!string didn't work until I used rt_init();
+Always call rt_init, or it will probably cause the sigsegfault(5), using to!string didn't work until I called rt_init();
 
 # Creating an Android Project
 By the time of this writing, in the Official D Wiki for Building to Android, the way to generate an apk is documented for using Ant, but this is long gone,
@@ -187,8 +187,8 @@ Test
 And in the end there are:
 > External Libraries
 > Scratches and Consoles
-Open the folder Test/app/src/main and inside main, create a folder called "jniLibs", this folder is extremely important, it is the default folder to
-put your shared libraries to be imported together with your .apk
+Open the folder Test/app/src/main and inside main, create a folder called `jniLibs`, this folder is **extremely important**, it is the default folder to
+put your shared libraries to be imported together with your .apk. If you wish to use other name for it, you will need to change your gradle file.
 For actually putting your libraries inside that folder, you will actually need to make directories for the target architectures, so, create inside it:
 - armeabi-v7a
 - arm64-v8a
@@ -222,23 +222,4 @@ public class Sample
 }
 ```
 Now, you're able to call `Sample.methodname("hello")` from anywhere in your code and D will be called on that
-
-
-
-# SDL Project
-You need to get the project from libsdl, the current SDL Version is SDL2.0.12, get the source code from [libsdl](https://www.libsdl.org/download-2.0.php)
-- Click to download the SDL2-X.Y.Z.tar.gz
-- Extract those files
-- Import SDL2-X.Y.Z/android-project into Android Studio
-- Generate symbolic links inside app/jni folder using
-```sh
-ln -s SDL2-X.Y.Z SDL2
-ln -s SDL2_image-X.Y.Z SDL2_image
-ln -s SDL2_mixer-X.Y.Z SDL2_mixer
-ln -s SDL2_net-X.Y.Z SDL2_net
-ln -s SDL2_ttf-X.Y.Z SDL2_ttf
-```
-- Go into Android Studio Build/Rebuild Project
-Now your project should throw a gradlew error about `YourSourceHere.c', needed by...`, basically, this file is a placeholder for the android-project, just
-go into app/jni/src/Android.mk and modify LOCAL_SRC_FILES := YourSourceHere.c to include the needed file, after that, Sync the gradle, build your project and
-it should be able to run
+If you wish to setup SDL with D, the tutorial is on Setting_D_SDL
