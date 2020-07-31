@@ -239,4 +239,10 @@ public class Sample
 }
 ```
 Now, you're able to call `Sample.methodname("hello")` from anywhere in your code and D will be called on that
+
+## Some useful libraries
+- log is a library for calling functions for logging in android e.g: `__android_log_vprint`
+
+
+
 If you wish to setup SDL with D, the tutorial is on Setting_D_SDL
