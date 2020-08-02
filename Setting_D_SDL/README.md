@@ -41,8 +41,8 @@ import bindbc.sdl;
 import std.string;
 import std.conv : to;
 import core.runtime : rt_init;
-import jni.d;
-import android.d;
+import jni;
+import android;
 bool loadSDLLibs()
 {
   SDLSupport ret = loadSDL();
