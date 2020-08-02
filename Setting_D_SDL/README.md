@@ -107,4 +107,4 @@ extern(C) int SDL_main()
 >> Usually located at $NDK_PATH/toolchains/llvm/prebuilt/(yourpcSO_x86_64)/sysroot/usr/lib/(yourarchitecture)/(androidNdkApiLevel)/
 >>> There are other important libs but as we're using SDL2, they are already included in the libsdl.so output from app/jni/src/Android.mk
 - Copy that file to app/src/main/jniLibs/(architecture folder)
-
+- Connect your phone/setup your emulator and run
