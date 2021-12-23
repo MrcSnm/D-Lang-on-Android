@@ -101,6 +101,7 @@ After downloading it, it's time to setup your compiler to find its existence.
         "-defaultlib=phobos2-ldc,druntime-ldc",
         "-link-defaultlib-shared=false",
         "-gcc=/home/hipreme/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang",
+        "-linker=/home/hipreme/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/linux-x86_64/bin/ld"
     ];
     lib-dirs = [
         "%%ldcbinarypath%%/../lib-android_aarch64/lib",
